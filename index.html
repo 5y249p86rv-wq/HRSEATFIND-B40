@@ -1610,34 +1610,11 @@ const PALETTE = [
 ];
 
 function defaultData() {
-  // Seed: only fills seats with placeholder names. Departments are intentionally
-  // left blank so the user must import their real data to populate the dept field
-  // (i.e. "导入部门数据为准").
-  const data = [
-    { id:0,  name:'总监-甲', dept:'', seat:'D1', position:'', color:'#e11d48' },
-    { id:1,  name:'薪酬-甲', dept:'', seat:'A1', position:'', color:'#0ea5e9' },
-    { id:2,  name:'薪酬-乙', dept:'', seat:'A2', position:'', color:'#3b82f6' },
-    { id:3,  name:'薪酬-丙', dept:'', seat:'M4', position:'', color:'#f59e0b' },
-    { id:4,  name:'经理-甲', dept:'', seat:'M1', position:'', color:'#8b5cf6' },
-    { id:5,  name:'经理-乙', dept:'', seat:'M2', position:'', color:'#a855f7' },
-    { id:6,  name:'经理-丙', dept:'', seat:'M3', position:'', color:'#d946ef' }
-  ];
-  for (let i = 0; i < 48; i++) {
-    const seat = 'B' + (i + 1);
-    if (REMOVED_SEATS.has(seat)) continue;
-    data.push({
-      id: 7 + i,
-      name: '员工-' + (i + 1),
-      dept: '',
-      seat: seat,
-      position: '',
-      color: PALETTE[i % PALETTE.length]
-    });
-  }
-  return data;
+  // 内置座位默认留空，由用户导入真实数据或手动新增填充
+  return [];
 }
 
-const CURRENT_VERSION = 'v4-position';
+const CURRENT_VERSION = 'v5-empty';
 function loadPeople() {
   try {
     if (localStorage.getItem('dataVersion') !== CURRENT_VERSION) {
