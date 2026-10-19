@@ -1139,6 +1139,12 @@ input, select, textarea { font-family: inherit; color: var(--fg); }
     inset 3px 3px 6px rgb(74,66,224,0.45),
     inset -3px -3px 6px rgba(139,132,255,0.3);
 }
+.admin-toolbar button.danger {
+  color: var(--danger);
+}
+.admin-toolbar button.danger:hover {
+  color: #C73E4E;
+}
 
 /* Table */
 .table-wrap { overflow-x: auto; }
@@ -1519,6 +1525,7 @@ button:focus-visible, .icon-btn:focus-visible, .back-btn:focus-visible, .admin-c
         <button class="primary" id="btnAdd">+ 新增</button>
         <button id="btnImport">📥 导入</button>
         <button id="btnExport">📤 导出</button>
+        <button class="danger" id="btnClearAll">🗑 清空全部</button>
         <input type="file" id="importFile" accept=".csv,.txt" style="display:none;">
       </div>
       <div class="table-wrap">
@@ -2446,6 +2453,20 @@ document.getElementById('tableBody').addEventListener('click', e => {
 });
 
 document.getElementById('btnAdd').addEventListener('click', () => openForm(null));
+
+document.getElementById('btnClearAll').addEventListener('click', () => {
+  if (PEOPLE.length === 0) { alert('座位表已为空'); return; }
+  if (!confirm('确定清空全部座位信息吗？此操作不可恢复，建议先导出备份。')) return;
+  PEOPLE = [];
+  rebuildSeatIndex();
+  savePeople();
+  if (currentPerson) {
+    currentPerson = null;
+    hidePersonInfo();
+  }
+  renderFloorPlan(null);
+  renderTable();
+});
 
 // ========== 导入导出 ==========
 document.getElementById('btnImport').addEventListener('click', () => {
